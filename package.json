@@ -1,0 +1,16 @@
+{
+  "name": "randomApiAuth",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/berazo29/randomApiAuth.git",
+  "author": "Bryan Erazo <bryanerazo29@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "dev": "nodemon index.js"}
+}
