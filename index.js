@@ -7,7 +7,17 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.use(express.json())
+app.use(session({
+  name: 'ssi',
+  resave: true,
+  saveUninitialized: false,
+  secret: 'secret',
+  cookie: {
+    maxAge: 360000,
+    sameSite: true,
+    secure: false
+  }
+}))
 app.use(
   express.urlencoded({
     extended: false
@@ -22,7 +32,7 @@ app.post('/login', (req, res) => {
   if (password === null || password.length === 0) {
     res.send("Invalid password")
   } 
-  res.send('Welcome')
+  res.send(`Welcome ${username}`)
 })
 
 app.post('/register', (req, res) => {
