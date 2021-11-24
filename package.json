@@ -9,8 +9,10 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-session": "^1.17.2"
   },
   "scripts": {
-    "dev": "nodemon index.js"}
+    "dev": "nodemon index.js"
+  }
 }
