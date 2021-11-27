@@ -1,42 +1,75 @@
 const session = require('express-session')
+const bcrypt = require('bcryptjs')
 const express = require('express')
+const mysql = require('mysql')
+const path = require('path')
+require('dotenv').config()
 const app = express()
 const port = 3000
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const { redirectLogin, redirectHome } = require('./controllers/auth.js')
 
 app.use(session({
-  name: 'ssi',
+  name: 'session',
   resave: true,
   saveUninitialized: false,
-  secret: 'secret',
+  secret: process.env.SECRET,
   cookie: {
-    maxAge: 360000,
+    maxAge: Number(process.env.SESSION_MAX_AGE),
     sameSite: true,
-    secure: false
+    secure: process.env.NODE_ENV === 'production'
   }
 }))
+
 app.use(
   express.urlencoded({
-    extended: false
+    extended: true
   })
 )
 
-app.post('/login', (req, res) => {
-  let {username, password} = req.body;
-  if (username === null || username.length === 0) {
-    res.send("Invalid username")
-  }
-  if (password === null || password.length === 0) {
-    res.send("Invalid password")
-  } 
-  res.send(`Welcome ${username}`)
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
 })
 
-app.post('/register', (req, res) => {
-  res.send('I am register')
+db.connect((err) => {
+  if (err) throw err
+  console.log('MySQL connected')
+})
+
+app.get('/', redirectLogin, (req, res) => {
+  res.send('I am home')
+})
+
+app.get('/login', (req, res) => {
+  res.render('pages/login')
+})
+
+app.post('/login', redirectHome, (req, res) => {
+  const { username, password } = req.body
+  if (username === null || username.length === 0) {
+    res.redirect('/login')
+  }
+  if (password === null || password.length === 0) {
+    res.redirect('/login')
+  }
+  const sql = 'SELECT * FROM users WHERE username = ?'
+  const values = [username, password]
+  db.query(sql, values[0], (err, results) => {
+    if (err) throw err
+    if (results.length === 0) {
+      return res.redirect('/register')
+    }
+    if (bcrypt.compareSync(password, results[0].password)) {
+      req.session.userId = username
+      return res.redirect('/')
+    }
+    res.redirect('/login')
+  })
 })
 
 app.listen(port, () => {
