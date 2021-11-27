@@ -72,6 +72,7 @@ app.post('/login', redirectHome, (req, res) => {
     }
     res.redirect('/login')
   })
+})
 
 app.post('/register', redirectHome, (req, res) => {
   const { username, email, password } = req.body
@@ -86,5 +87,5 @@ app.post('/register', redirectHome, (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log("server running" )
 })
