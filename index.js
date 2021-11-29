@@ -47,17 +47,17 @@ app.get('/', redirectLogin, (req, res) => {
   res.send('I am home')
 })
 
-app.get('/login', (req, res) => {
+app.get('/auth/login', (req, res) => {
   res.render('pages/login')
 })
 
-app.post('/login', redirectHome, (req, res) => {
+app.post('/auth/login', redirectHome, (req, res) => {
   const { username, password } = req.body
   if (username === null || username.length === 0) {
-    res.redirect('/login')
+    res.redirect('/auth/login')
   }
   if (password === null || password.length === 0) {
-    res.redirect('/login')
+    res.redirect('/auth/login')
   }
   const sql = 'SELECT * FROM users WHERE username = ?'
   const values = [username, password]
@@ -70,7 +70,7 @@ app.post('/login', redirectHome, (req, res) => {
       req.session.userId = username
       return res.redirect('/')
     }
-    res.redirect('/login')
+    res.redirect('/auth/login')
   })
 })
 
@@ -87,5 +87,5 @@ app.post('/register', redirectHome, (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log("server running" )
+  console.log('server running')
 })
