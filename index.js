@@ -1,7 +1,6 @@
 const express = require('express')
 const session = require('express-session')
 require('dotenv').config()
-const users = require('./users')
 const { redirectLogin, redirectHome } = require('./controllers/auth')
 const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(10)
@@ -35,7 +34,8 @@ const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE
+  database: process.env.DB_DATABASE,
+  multipleStatements: true
 })
 
 db.connect((err) => {
@@ -75,14 +75,26 @@ app.post('/auth/login', redirectHome, (req, res) => {
 })
 
 app.post('/register', redirectHome, (req, res) => {
-  const { username, email, password } = req.body
-  if (username && email && password) {
+  const { email, password } = req.body
+  if (email && password) {
     const hash = bcrypt.hashSync(password, salt)
-    users.push({ username, email, hash })
-    req.session.userId = username
-    res.redirect('/')
-  } else {
-    res.send('Missing fields')
+    const sql1 = 'SELECT * FROM users WHERE email = ?'
+    const sql2 = 'INSERT INTO users (email, password) VALUES (?, ?)'
+    const values = [email, hash]
+    db.query(sql1, values[0], (err, results) => {
+      if (err) throw err
+      console.log(results[0])
+      if (results.length === 0) {
+        db.query(sql2, values, (err, results) => {
+          if (err) throw err
+          console.log(results)
+          req.session.userId = email
+          res.redirect('/')
+        })
+      } else {
+        res.redirect('/auth/login')
+      }
+    })
   }
 })
 
