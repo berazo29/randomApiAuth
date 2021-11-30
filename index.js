@@ -1,7 +1,7 @@
 const express = require('express')
 const session = require('express-session')
 require('dotenv').config()
-const { redirectLogin, redirectHome } = require('./controllers/auth')
+const { redirectLogin, redirectHome, logout } = require('./controllers/auth')
 const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(10)
 const mysql = require('mysql')
@@ -93,12 +93,14 @@ app.post('/register', redirectHome, (req, res) => {
         res.redirect('/auth/login')
       }
     })
-  }
-  else {
+  } else {
     res.redirect('/auth/login')
   }
 })
 
+app.post('/logout', logout, (req, res) => {
+  res.redirect('/auth/login')
+})
 app.listen(port, () => {
   console.log('server running')
 })
