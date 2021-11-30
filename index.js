@@ -8,6 +8,7 @@ const mysql = require('mysql')
 const path = require('path')
 const app = express()
 const port = 3000
+const { keyGenerator } = require('./controllers/keyGenerator')
 
 app.use(session({
   name: 'session',
@@ -100,6 +101,10 @@ app.post('/register', redirectHome, (req, res) => {
 
 app.post('/logout', logout, (req, res) => {
   res.redirect('/auth/login')
+})
+
+app.post('/generateKey', redirectLogin, (req, res) => {
+  res.send(keyGenerator())
 })
 app.listen(port, () => {
   console.log('server running')
