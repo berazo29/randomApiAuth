@@ -94,6 +94,9 @@ app.post('/register', redirectHome, (req, res) => {
       }
     })
   }
+  else {
+    res.redirect('/auth/login')
+  }
 })
 
 app.listen(port, () => {
