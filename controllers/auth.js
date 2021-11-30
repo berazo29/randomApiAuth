@@ -14,4 +14,11 @@ const redirectLogin = (req, res, next) => {
   }
 }
 
-module.exports = { redirectLogin, redirectHome }
+const logout = (req, res, next) => {
+  req.session.destroy(() => {
+    res.clearCookie('session')
+    next()
+  })
+}
+
+module.exports = { redirectLogin, redirectHome, logout }
