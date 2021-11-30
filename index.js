@@ -83,11 +83,9 @@ app.post('/register', redirectHome, (req, res) => {
     const values = [email, hash]
     db.query(sql1, values[0], (err, results) => {
       if (err) throw err
-      console.log(results[0])
       if (results.length === 0) {
         db.query(sql2, values, (err, results) => {
           if (err) throw err
-          console.log(results)
           req.session.userId = email
           res.redirect('/')
         })
