@@ -7,7 +7,7 @@ const salt = bcrypt.genSaltSync(10)
 const mysql = require('mysql')
 const path = require('path')
 const app = express()
-const port = 3000
+const port = process.env.SERVER_PORT
 
 app.use(session({
   name: 'session',
@@ -101,6 +101,7 @@ app.post('/register', redirectHome, (req, res) => {
 app.post('/logout', logout, (req, res) => {
   res.redirect('/auth/login')
 })
+
 app.listen(port, () => {
-  console.log('server running')
+  console.log(`Server listening at http://localhost:${port}`)
 })
