@@ -9,6 +9,8 @@ const path = require('path')
 const app = express()
 const { keyGenerator } = require('./controllers/keyGenerator')
 const port = process.env.SERVER_PORT
+const redis = require('redis');
+const client = redis.createClient();
 
 app.use(session({
   name: 'session',
@@ -103,8 +105,13 @@ app.post('/logout', logout, (req, res) => {
   res.redirect('/auth/login')
 })
 
-app.post('/generateKey', redirectLogin, (req, res) => {
-  res.send(keyGenerator())
+app.post('/generateKey', /* redirectLogin,  */(req, res) => {
+  const key = keyGenerator();
+  
+  client.on('connect', () =>{
+    console.log('connected');
+  });
+  res.send(key);
 })
 
 app.listen(port, () => {
