@@ -30,6 +30,14 @@ Server listening at http://localhost:3000
 MySQL connected
 ```
 
+## DevTools
+Create the project database
+```
+node ./Models/devtools/dbschema-cli.js init
+```
+
+
+
 <!-- LICENSE -->
 ## License
 
