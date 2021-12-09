@@ -3,9 +3,13 @@ const salt = bcrypt.genSaltSync(10)
 const { db } = require('../Models/db')
 
 const registerNewUser = (req, res) => {
-  const { email, password } = req.body
-  if (!email || !password) {
-    res.redirect('/auth/login')
+  const { email, password, password2 } = req.body
+  if (!email || !password || !password2) {
+    res.redirect('/auth/register')
+    return
+  }
+  if (password !== password2) {
+    res.redirect('/auth/register')
     return
   }
   const hash = bcrypt.hashSync(password, salt)
