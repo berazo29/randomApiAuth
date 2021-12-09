@@ -7,7 +7,9 @@ const keyGenerator = () => {
   const v4 = uuid.v4()
   const key = {
     key: v4,
-    exp_date: expirationDate.toString()
+    exp_date: expirationDate.toString(),
+    exp_time: DAYS_30,
+    created_time: currentTime
   }
   return key
 }

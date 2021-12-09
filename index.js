@@ -9,6 +9,9 @@ const path = require('path')
 const app = express()
 const { keyGenerator } = require('./controllers/keyGenerator')
 const port = process.env.SERVER_PORT
+const Redis = require('ioredis');
+const client = new Redis();
+const auth = require('./routes/auth')
 
 app.use(session({
   name: 'session',
@@ -31,18 +34,15 @@ app.use(
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  multipleStatements: true
-})
 
-db.connect((err) => {
-  if (err) throw err
-  console.log('MySQL connected')
-})
+
+
+
+client.on('connect', () =>{
+  console.log('Redis connected');
+});
+
+app.use('/auth', auth)
 
 app.get('/', redirectLogin, (req, res) => {
   res.send('I am home')
@@ -75,36 +75,15 @@ app.post('/auth/login', redirectHome, (req, res) => {
   })
 })
 
-app.post('/register', redirectHome, (req, res) => {
-  const { email, password } = req.body
-  if (email && password) {
-    const hash = bcrypt.hashSync(password, salt)
-    const sql1 = 'SELECT * FROM users WHERE email = ?'
-    const sql2 = 'INSERT INTO users (email, password) VALUES (?, ?)'
-    const values = [email, hash]
-    db.query(sql1, values[0], (err, results) => {
-      if (err) throw err
-      if (results.length === 0) {
-        db.query(sql2, values, (err, results) => {
-          if (err) throw err
-          req.session.userId = email
-          res.redirect('/')
-        })
-      } else {
-        res.redirect('/auth/login')
-      }
-    })
-  } else {
-    res.redirect('/auth/login')
-  }
-})
-
 app.post('/logout', logout, (req, res) => {
   res.redirect('/auth/login')
 })
 
-app.post('/generateKey', redirectLogin, (req, res) => {
-  res.send(keyGenerator())
+app.post('/generateKey', /* redirectLogin,  */(req, res) => {
+  const keyGen = keyGenerator();
+  console.log(req.session.userId)
+  client.set(req.session.userId, keyGen.key, 'PX', keyGen.exp_time)
+  res.send(keyGen);
 })
 
 app.listen(port, () => {
