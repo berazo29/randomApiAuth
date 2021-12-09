@@ -31,7 +31,8 @@ MySQL connected
 ```
 
 ## DevTools
-Create the project database
+Create the project database <br>
+`Warning:` It will drop the database if it exists to create a new database.
 ```
 node ./Models/devtools/dbschema-cli.js init
 ```
