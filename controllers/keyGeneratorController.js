@@ -1,4 +1,5 @@
 const uuid = require('uuid')
+const { clientRedis } = require('../Models/db')
 
 const keyGenerator = () => {
   const DAYS_30 = 1000 * 60 * 60 * 24 * 30
@@ -14,4 +15,11 @@ const keyGenerator = () => {
   return key
 }
 
-module.exports = { keyGenerator }
+const generateNewKey = (req, res) => {
+  const keyGen = keyGenerator()
+  console.log(req.session.userId)
+  clientRedis.set(req.session.userId, keyGen.key, 'PX', keyGen.exp_time)
+  res.send(keyGen)
+}
+
+module.exports = { generateNewKey }
