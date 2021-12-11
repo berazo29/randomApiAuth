@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { registerNewUser } = require('../controllers/userController')
-
-const { redirectHome, logout } = require('../Controllers/authController')
+const { redirectHome, logout } = require('../controllers/authController')
 
 router.get('/register', redirectHome, (req, res) => {
   res.render('pages/register')
