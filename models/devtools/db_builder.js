@@ -54,9 +54,10 @@ function createTables (dbname) {
       })
       .createTable('keys_logs', table => {
         table.increments().unsigned()
+        table.string('key').notNullable()
         table.integer('user_id').unsigned()
-        table.timestamp('created_at').notNullable()
-        table.timestamp('expire_at')
+        table.timestamp('created_time').notNullable()
+        table.timestamp('exp_time').notNullable()
         table.foreign('user_id').references('id').inTable('users')
         jobs.push('Table keys_logs created.')
       })
