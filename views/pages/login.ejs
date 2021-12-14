@@ -42,14 +42,14 @@
                     <div class="card-body">
                         <form action="/auth/login" method="post">
                             <div class="card form-group form-floating mb-3">
-                                <input type="text" class="form-control" placeholder="Name" name="username" data-sb-validations="required">
-                                <label for="username">Name</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                                <input type="email" class="form-control" placeholder="Enter your email" name="email" data-sb-validations="required">
+                                <label for="email">Email</label>
+                                <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.</div>
                             </div>
                             <div class="card form-group form-floating mb-3">
-                                <input type="password" class="form-control" placeholder="Pass" name="password" data-sb-validations="required">
+                                <input type="password" class="form-control" placeholder="Enter your password" name="password" data-sb-validations="required">
                                 <label for="password">Password</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">Password is required.</div>
+                                <div class="invalid-feedback" data-sb-feedback="password:required">Password is required.</div>
                             </div>
                             <div class="card form-group form-floating mb-3">
                                 <button type="submit" class="btn btn-info btn-block">
