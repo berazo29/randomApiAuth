@@ -7,7 +7,7 @@ router.get('/register', redirectHome, (req, res) => {
   res.render('pages/register')
 })
 
-router.get('/login', (req, res) => {
+router.get('/login', redirectHome, (req, res) => {
   res.render('pages/login')
 })
 
