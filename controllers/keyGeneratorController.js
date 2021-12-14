@@ -1,5 +1,5 @@
 const uuid = require('uuid')
-const { clientRedis } = require('../Models/db')
+const { clientRedis } = require('../models/db')
 
 const keyGenerator = () => {
   const DAYS_30 = 1000 * 60 * 60 * 24 * 30
