@@ -1,5 +1,6 @@
 const uuid = require('uuid')
-const { clientRedis } = require('../Models/db')
+const { db, clientRedis } = require('../models/db')
+
 
 const keyGenerator = () => {
   const DAYS_30 = 1000 * 60 * 60 * 24 * 30
@@ -22,4 +23,18 @@ const generateNewKey = (req, res) => {
   res.send(keyGen)
 }
 
-module.exports = { generateNewKey }
+const getKeys = (req, res) => {
+  const sql = 'SELECT id FROM users WHERE email= ?'
+  db.query( sql, req.session.userId, (err, results) => {
+    if (err) throw err
+    const user_id = results[0].id
+    const sql2 = 'SELECT * FROM keys_logs WHERE user_id = ?'
+    db.query(sql2, user_id, (err, results) => {
+      if (err) throw err
+      res.render('pages/home', { title: 'Home', keys: results })
+    })
+  })
+}
+
+
+module.exports = { generateNewKey, getKeys }
