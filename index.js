@@ -4,9 +4,9 @@ require('dotenv').config()
 const path = require('path')
 const app = express()
 const port = process.env.SERVER_PORT
-const authRoute = require('./Routes/authRoute')
-const mainRoute = require('./Routes/mainRoute')
-const keyGeneratorRoute = require('./Routes/keyGeneratorRoute')
+const authRoute = require('./routes/authRoute')
+const mainRoute = require('./routes/mainRoute')
+const keyGeneratorRoute = require('./routes/keyGeneratorRoute')
 
 app.use(session({
   name: 'session',
