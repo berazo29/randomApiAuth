@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(Number(process.env.BCRYPT_SALT))
 const { db } = require('../models/db')
-const validator = require('validator');
+const validator = require('validator')
 
 const registerNewUser = (req, res) => {
   const { email, password, password2 } = req.body
