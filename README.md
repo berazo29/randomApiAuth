@@ -31,7 +31,7 @@ MySQL connected
 ```
 
 ## DevTools
-Create the project database <br>
+Create the project database (MYSQL 8.0)<br>
 `Warning:` It will drop the database if it exists to create a new database.
 ```
 node ./Models/devtools/dbschema-cli.js init
