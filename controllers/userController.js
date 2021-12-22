@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(Number(process.env.BCRYPT_SALT))
 const { db } = require('../models/db')
+const validator = require('validator')
 
 const registerNewUser = (req, res) => {
   const { email, password, password2 } = req.body
@@ -12,6 +13,12 @@ const registerNewUser = (req, res) => {
     res.redirect('/auth/register')
     return
   }
+
+  if (!validator.isEmail(email) || !validator.isStrongPassword(password)) {
+    res.redirect('/auth/register')
+    return
+  }
+
   const hash = bcrypt.hashSync(password, salt)
   const sql1 = 'SELECT * FROM users WHERE email = ?'
   const sql2 = 'INSERT INTO users (email, password) VALUES (?, ?)'

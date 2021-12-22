@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5dade2;">
+    <div class="container">
+
+
+        <% if (locals.userId) { %>
+        <form action="auth/logout" method="post">
+            <button type="submit" class="btn btn-info">Logout</button>
+        </form>
+        <% } else { %>
+            <% if (locals.title && locals.title === 'login') { %>
+                    <a href="/auth/register"><button class="btn btn-info">Register</button></a>
+                <% } else { %>
+                    <a href="/auth/login"><button class="btn btn-info">Login</button></a>
+                <% }
+        } %>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/"> <i class="bi bi-house-fill"></i>
+                        Home</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
