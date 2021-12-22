@@ -29,6 +29,11 @@ app.use(
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
+app.use((req, res, next) => {
+  res.locals.userId = req.session.userId
+  next()
+})
+
 app.use('/', mainRoute)
 app.use('/auth', authRoute)
 app.use('/keyGenerator', keyGeneratorRoute)
