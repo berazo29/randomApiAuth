@@ -4,11 +4,11 @@ const { registerNewUser } = require('../controllers/userController')
 const { redirectHome, logout, login } = require('../controllers/authController')
 
 router.get('/register', redirectHome, (req, res) => {
-  res.render('pages/register')
+  res.render('pages/register', {title: 'register'})
 })
 
 router.get('/login', redirectHome, (req, res) => {
-  res.render('pages/login')
+  res.render('pages/login', {title: 'login'})
 })
 
 router.post('/register', redirectHome, registerNewUser)
