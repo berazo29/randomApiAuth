@@ -7,10 +7,10 @@
             <button type="submit" class="btn btn-info">Logout</button>
         </form>
         <% } else { %>
-            <% if (locals.title === 'login') {%>
+            <% if (locals.title && locals.title === 'login') { %>
                     <a href="/auth/register"><button class="btn btn-info">Register</button></a>
-                <% } else {%>
-                <a href="/auth/login"><button class="btn btn-info">Login</button></a>
+                <% } else { %>
+                    <a href="/auth/login"><button class="btn btn-info">Login</button></a>
                 <% }
         } %>
 
