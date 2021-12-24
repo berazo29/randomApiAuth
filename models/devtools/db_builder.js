@@ -46,8 +46,8 @@ function createTables (dbname) {
         jobs.push('Table profiles created.')
       })
       .createTable('users_profiles', function (table) {
-        table.integer('user_id').unsigned()
-        table.integer('profile_id').unsigned()
+        table.integer('user_id').unsigned().primary()
+        table.integer('profile_id').unsigned().unique()
         table.foreign('user_id').references('id').inTable('users')
         table.foreign('profile_id').references('id').inTable('profiles')
         jobs.push('Table users_profiles created.')
