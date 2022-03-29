@@ -26,6 +26,9 @@
                             </button>
                         </div>
                     </form>
+                    <% errors.forEach((error) => { %>
+                        <p class="alert alert-danger"> <%= error %> </p>
+                    <% }) %>
                 </div>
             </div>
         </div>
