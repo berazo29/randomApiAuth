@@ -11,7 +11,8 @@
                 <div class="card-body">
                     <form action="/auth/login" method="post">
                         <div class="card form-group form-floating mb-3">
-                            <input type="email" class="form-control" placeholder="Enter your email" name="email" data-sb-validations="required">
+                            <input type="email" class="form-control" placeholder="Enter your email" name="email"
+                                   data-sb-validations="required" value="<%= locals.email %>">
                             <label for="email">Email</label>
                             <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.</div>
                         </div>

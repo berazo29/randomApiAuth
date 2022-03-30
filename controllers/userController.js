@@ -16,17 +16,17 @@ const registerNewUser = (req, res) => {
     errors.push('Passwords do not match.')
   }
   if (errors.length !== 0) {
-    res.render('pages/register', { title: 'register', errors: errors })
+    res.render('pages/register', { title: 'register', errors: errors, email: email })
     return
   }
   if (!validator.isEmail(email)) {
     errors.push('Email is not valid')
-    res.render('pages/register', { title: 'register', errors: errors })
-    return
   }
   if (!validator.isStrongPassword(password)) {
     errors.push('Password does not meet security checks.')
-    res.render('pages/register', { title: 'register', errors: errors })
+  }
+  if (errors.length !== 0) {
+    res.render('pages/register', { title: 'register', errors: errors, email: email })
     return
   }
 
