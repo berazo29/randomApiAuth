@@ -34,7 +34,7 @@ const login = (req, res) => {
     if (!password) {
       errors.push('Password cannot be empty.')
     }
-    res.render('pages/login', { title: 'Login', errors: errors, email: email })
+    res.render('pages/login', { title: 'login', errors: errors, email: email })
     return
   }
   const sql = 'SELECT * FROM users WHERE email = ?'
@@ -50,7 +50,7 @@ const login = (req, res) => {
       return
     }
     errors.push('Password is not correct.')
-    res.render('pages/login', { title: 'Login', errors: errors, email: email })
+    res.render('pages/login', { title: 'login', errors: errors, email: email })
   })
 }
 
