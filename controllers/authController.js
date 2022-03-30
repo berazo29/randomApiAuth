@@ -41,7 +41,7 @@ const login = (req, res) => {
   db.query(sql, email, (err, results) => {
     if (err) throw err
     if (results.length === 0) {
-      res.redirect('/auth/register')
+      res.render('pages/register', { title: 'register', errors: errors, email: email })
       return
     }
     if (bcrypt.compareSync(password, results[0].password)) {
