@@ -23,6 +23,7 @@
     "validator": "^13.7.0"
   },
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "st": "standard"
   }
 }

@@ -28,7 +28,7 @@ const generateNewKey = (req, res) => {
       if (err) {
         console.log(err)
       }
-      res.send(keyGen)
+      res.redirect('/')
     })
   })
 }
