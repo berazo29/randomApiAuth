@@ -7,6 +7,7 @@ const port = process.env.SERVER_PORT
 const authRoute = require('./routes/authRoute')
 const mainRoute = require('./routes/mainRoute')
 const keyGeneratorRoute = require('./routes/keyGeneratorRoute')
+const accountRoute = require('./routes/accountRoute')
 
 app.use(session({
   name: 'session',
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 app.use('/', mainRoute)
 app.use('/auth', authRoute)
 app.use('/keyGenerator', keyGeneratorRoute)
+app.use('/account', accountRoute)
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)
