@@ -26,15 +26,22 @@ const logout = (req, res, next) => {
 
 const login = (req, res) => {
   const { email, password } = req.body
+  const errors = []
   if (!email || !password) {
-    res.redirect('/auth/login')
+    if (!email) {
+      errors.push('Email cannot be empty.')
+    }
+    if (!password) {
+      errors.push('Password cannot be empty.')
+    }
+    res.render('pages/login', { title: 'login', errors: errors, email: email })
     return
   }
   const sql = 'SELECT * FROM users WHERE email = ?'
   db.query(sql, email, (err, results) => {
     if (err) throw err
     if (results.length === 0) {
-      res.redirect('/auth/register')
+      res.render('pages/register', { title: 'register', errors: errors, email: email })
       return
     }
     if (bcrypt.compareSync(password, results[0].password)) {
@@ -42,7 +49,8 @@ const login = (req, res) => {
       res.redirect('/')
       return
     }
-    res.redirect('/auth/login')
+    errors.push('Password is not correct.')
+    res.render('pages/login', { title: 'login', errors: errors, email: email })
   })
 }
 

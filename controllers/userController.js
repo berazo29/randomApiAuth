@@ -5,17 +5,28 @@ const validator = require('validator')
 
 const registerNewUser = (req, res) => {
   const { email, password, password2 } = req.body
-  if (!email || !password || !password2) {
-    res.redirect('/auth/register')
-    return
+  const errors = []
+  if (!email) {
+    errors.push('Email cannot be empty.')
+  }
+  if (!password) {
+    errors.push('Password cannot be empty.')
   }
   if (password !== password2) {
-    res.redirect('/auth/register')
+    errors.push('Passwords do not match.')
+  }
+  if (errors.length !== 0) {
+    res.render('pages/register', { title: 'register', errors: errors, email: email })
     return
   }
-
-  if (!validator.isEmail(email) || !validator.isStrongPassword(password)) {
-    res.redirect('/auth/register')
+  if (!validator.isEmail(email)) {
+    errors.push('Email is not valid')
+  }
+  if (!validator.isStrongPassword(password)) {
+    errors.push('Password does not meet security checks.')
+  }
+  if (errors.length !== 0) {
+    res.render('pages/register', { title: 'register', errors: errors, email: email })
     return
   }
 
@@ -26,7 +37,8 @@ const registerNewUser = (req, res) => {
   db.query(sql1, values[0], (err, results) => {
     if (err) throw err
     if (results.length !== 0) {
-      res.redirect('/auth/login')
+      errors.push('Email already taken.')
+      res.render('pages/register', { title: 'register', errors: errors })
       return
     }
     db.query(sql2, values, (err, results) => {
