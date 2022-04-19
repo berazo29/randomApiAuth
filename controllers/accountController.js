@@ -46,7 +46,43 @@ const createProfile = (req, res) => {
 }
 
 const updateProfile = (req, res) => {
-  res.send('update route')
+  const email = req.session.userId
+  const { name, lastname, country } = req.body
+  if (!name || !lastname || !country) {
+    res.send('Invalid name, lastname or country input')
+    return
+  }
+
+  db.query('SELECT id FROM users WHERE email = ?', email, (error, results) => {
+    if (error) throw error
+    if (results.length === 0) {
+      res.send('user id was not found with this email')
+      return
+    }
+    const userId = results[0].id
+    db.query('SELECT profile_id FROM users_profiles WHERE user_id = ?', userId, (error, results) => {
+      if (error) throw error
+      if (results.length === 0) {
+        res.send('profile already exist')
+        return
+      }
+      db.beginTransaction(error => {
+        if (error) throw error
+        const profileId = results[0].profile_id
+        db.query('UPDATE profiles SET name = ?, lastname = ?, country = ? WHERE id = ?', [name, lastname, country, profileId], (error, results) => {
+          if (error) {
+            return db.rollback(() => { throw error })
+          }
+          db.commit((error) => {
+            if (error) {
+              return db.rollback(() => { throw error })
+            }
+            res.send('Update successful')
+          })
+        })
+      })
+    })
+  })
 }
 
 module.exports = { createProfile, updateProfile }
