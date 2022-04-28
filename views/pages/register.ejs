@@ -21,10 +21,20 @@
                                 <label for="password">Password</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Password is required.</div>
                             </div>
-                            <div class="card form-group form-floating mb-3">
+                            <div class="card form-group form-floating mb-4">
                                 <input type="password" class="form-control" placeholder="Re-enter your password" name="password2" data-sb-validations="required">
                                 <label for="password2">Re-enter password</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Password is required.</div>
+                            </div>
+                            <div class="form-check mb-4">
+                                <input type="checkbox" class="form-check-input" name="terms">
+                                <label for="terms" class="form-check-label text-muted small">
+                                    <span class="small">I've read and agree to the
+                                        <a href="/our-term-and-conditions" target="_blank">Terms and conditions</a>
+                                        and
+                                        <a href="/our-privacy-policy" target="_blank">Privacy Policy</a>.
+                                    </span>
+                                </label>
                             </div>
                             <div class="card form-group form-floating mb-3">
                                 <button type="submit" class="btn btn-info btn-block">
@@ -32,6 +42,9 @@
                                 </button>
                             </div>
                         </form>
+                        <div class="form-group ">
+                            <p class="text-muted small">Have an account? <a href="/auth/login" style="text-decoration:none">Log in</a></p>
+                        </div>
                         <% errors.forEach( (error) => { %>
                             <p class="alert alert-danger"> <%= error %> </p>
                         <% }) %>
