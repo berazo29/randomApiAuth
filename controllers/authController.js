@@ -57,7 +57,7 @@ const login = (req, res) => {
 }
 
 const register = (req, res) => {
-  const { email, password, password2 } = req.body
+  const { email, password, password2, terms } = req.body
   const errors = []
   if (!email) {
     errors.push('Email cannot be empty.')
@@ -67,6 +67,9 @@ const register = (req, res) => {
   }
   if (password !== password2) {
     errors.push('Passwords do not match.')
+  }
+  if (!terms || terms !== 'on') {
+    errors.push('Please agree with the Terms and Conditions and Privacy policy')
   }
   if (errors.length !== 0) {
     res.render('pages/register', { title: 'register', errors: errors, email: email })
