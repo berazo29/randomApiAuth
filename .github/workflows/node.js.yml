@@ -25,7 +25,7 @@ jobs:
       mysql-service:
         image: mysql:8
         ports:
-          - ${{ env.DB_PORT }}
+          - 3306
         env:
           DB_USER: ${{ env.DB_USER }}
           DB_PASSWORD: ${{ env.DB_PASSWORD }}
