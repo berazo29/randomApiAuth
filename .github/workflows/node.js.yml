@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     env:
-      DB_HOST: localhost
+      DB_HOST: 0.0.0.0
       DB_USER: root
       DB_PASSWORD: simplepassword
       DB_NAME: test_db
@@ -22,7 +22,32 @@ jobs:
       NODE_ENV: development
 
     runs-on: ubuntu-latest
+    services:
+      mysql-service:
+        image: mysql:8
+        ports:
+          - ${{ env.DB_PORT }}
+        env:
+          DB_USER: ${{ env.DB_USER }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+        options: >-
+          --name=mysql-service
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
+      redis-service:
+        image: redis:latest
+        ports:
+          - 6379
+        options: >-
+          --name=redis-service
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     strategy:
       matrix:
         node-version: [17.x]
@@ -34,19 +59,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Run mysql container
-    - run: docker run --detach --name=$DB_NAME --env="MYSQL_ROOT_PASSWORD=$DB_PASSWORD" --publish $DB_PORT:3306 mysql:8
-
-    - name: Run redis container
-    - run: docker run --name some-redis -p 6379:6379 -d redis
-
-    - name: Install dependencies and sanitize folders
     - run: npm install -g yarn
     - run: rm -rf node_modules
     - run: yarn install --frozen-lockfile
-
-    - name: Run tests
     - run: yarn test
-
-    - name: Clean yarn
     - run: npm uninstall -g yarn
