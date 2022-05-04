@@ -85,4 +85,9 @@ const updateProfile = (req, res) => {
   })
 }
 
-module.exports = { createProfile, updateProfile }
+const profileView = (req, res) => {
+  const user = { email: 'juanp@foo.com' ,name: 'Juan', lastname: 'Perez', country: 'Spain' }
+  res.render('pages/account/profile', { title: 'profile', errors: [], user: user })
+} 
+
+module.exports = { createProfile, updateProfile, profileView }

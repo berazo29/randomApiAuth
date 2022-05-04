@@ -1,9 +1,9 @@
 const express = require('express')
-const { createProfile, updateProfile } = require('../controllers/accountController')
+const { createProfile, updateProfile, profileView } = require('../controllers/accountController')
 const { redirectLogin } = require('../controllers/authController')
 const router = express.Router()
 
-router.get('/profile', redirectLogin, (req, res) => {})
+router.get('/profile', redirectLogin, profileView, (req, res) => {})
 
 router.post('/createProfile', redirectLogin, createProfile, (req, res) => {})
 
