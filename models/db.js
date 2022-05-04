@@ -1,14 +1,17 @@
 require('dotenv').config()
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const Redis = require('ioredis')
-const clientRedis = new Redis()
+const clientRedis = new Redis({
+  port: 6379,
+  host: process.env.DB_HOST
+})
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  multipleStatements: true
+  port: process.env.DB_PORT
 })
 
 db.connect((err) => {

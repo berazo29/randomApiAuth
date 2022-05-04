@@ -6,7 +6,11 @@
   "author": "Bryan Erazo <bryanerazo29@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "chai": "^4.3.6",
+    "mocha": "^9.2.2",
+    "nodemon": "^2.0.15",
+    "nyc": "^15.1.0",
+    "supertest": "^6.2.2"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -16,7 +20,7 @@
     "express-session": "^1.17.2",
     "ioredis": "^4.28.2",
     "knex": "^0.95.14",
-    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "standard": "^16.0.4",
     "uuid": "^8.3.2",
@@ -24,6 +28,13 @@
   },
   "scripts": {
     "dev": "nodemon index.js",
-    "st": "standard"
+    "st": "standard",
+    "test": "mocha",
+    "coverage": "nyc yarn test"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
   }
 }

@@ -5,13 +5,48 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main, development ]
+    branches: [ development ]
+env:
+  DB_HOST: localhost
+  DB_USER: root
+  DB_PASSWORD: simplepassword
+  DB_NAME: test_db
+  DB_PORT: 3306
+  SESSION_SECRET: this-is-a-testing-secret
+  SESSION_MAX_AGE: 360000
+  SERVER_PORT: 3000
+  BCRYPT_SALT: 10
+  NODE_ENV: development
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    services:
+      mysql-service:
+        image: mysql:8
+        ports:
+          - 3306
+        env:
+          DB_USER: ${{ env.DB_USER }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+        options: >-
+          --name=mysql-service
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
+      redis-service:
+        image: redis:latest
+        ports:
+          - 6379
+        options: >-
+          --name=redis-service
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     strategy:
       matrix:
         node-version: [17.x]
@@ -24,6 +59,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g yarn
-    - run: rm -rf node_modules 
+    - run: rm -rf node_modules
     - run: yarn install --frozen-lockfile
+    - run: yarn test
     - run: npm uninstall -g yarn
