@@ -1,4 +1,6 @@
 # UUID Key Generator Web Application
+![example workflow](https://github.com/berazo29/randomApiAuth/actions/workflows/node.js.yml/badge.svg?branch=development) <br />
+
 Interface for Authentication and Authorization using Session and JWT.
 
 ## Installation:
