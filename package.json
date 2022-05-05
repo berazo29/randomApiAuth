@@ -30,7 +30,8 @@
     "dev": "nodemon index.js",
     "st": "standard",
     "test": "mocha",
-    "coverage": "nyc yarn test"
+    "coverage": "nyc yarn test",
+    "init-test-db": "node ./models/devtools/dbschema-cli.js init populate"
   },
   "standard": {
     "env": [
