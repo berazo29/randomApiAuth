@@ -636,3 +636,6 @@ FodyWeavers.xsd
 # vscode folder
 /.vscode
 
+# Mac files
+.DS_Store
+

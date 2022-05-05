@@ -1,0 +1,44 @@
+<%- include('../templates/header', {title: title}) %>
+<%- include('../templates/navbar') %>
+
+<div class="page-container">
+    <div class="padding" style="padding: 2em !important;">
+        <div class="row d-flex p-2 justify-content-center">
+            <div class="col-xl-4 col-md-12">
+                <div class="card user-card-full" style="border-radius: 10px 10px 10px 10px; overflow: hidden; box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);">
+                    <div class="row m-l-0 m-r-0" style="margin-right: 0px; margin-left: 0px;">
+                        <div class="col-sm-4 bg-c-lite-green user-profile" style="padding: 20px 0; background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f)); background: linear-gradient(to, right, #ee5a6f, #f29263);">
+                            <div class="card-block text-center text-white">
+                                <div class="m-b-25" style="margin-bottom: 25px;"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                                <h6 class="f-w-600" style="font-size: 14px;"><%= user.email %></h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-block" style="padding: 1.25rem;">
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="font-size: 14px; border-bottom: 1px solid #e0e0e0;">Information</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600" style="line-height: 50px; margin-bottom: 0px; font-weight: 600;">Name</p>
+                                        <h6 class="text-muted f-w-400" style="font-size: 14px;"><%= user.name %></h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600" style="line-height: 50px; margin-bottom: 0px; font-weight: 600;">Lastname</p>
+                                        <h6 class="text-muted f-w-400" style="font-size: 14px;"><%= user.lastname %></h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600" style="line-height: 50px; margin-bottom: 0px; font-weight: 600;">Country</p>
+                                        <h6 class="text-muted f-w-400" style="font-size: 14px;"><%= user.country %></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../templates/footer') %>
