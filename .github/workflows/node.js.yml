@@ -49,12 +49,23 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: Start Redis
       uses: supercharge/redis-github-action@1.4.0
       with:
         redis-version: ${{ matrix.redis-version }}
-    - run: npm install -g yarn
-    - run: rm -rf node_modules
-    - run: yarn install --frozen-lockfile
-    - run: yarn test
-    - run: npm uninstall -g yarn
+
+    - name: Build and install dependencies
+      run: |
+        npm install -g yarn
+        rm -rf node_modules
+        yarn install --frozen-lockfile
+        
+    - name: Test 
+      run: yarn test
+
+    - name: Coverange 
+      run: yarn coverage
+
+    - name: Clean yarn
+      run: npm uninstall -g yarn
