@@ -60,7 +60,10 @@ jobs:
         npm install -g yarn
         rm -rf node_modules
         yarn install --frozen-lockfile
-        
+    
+    - name: Initialize test database
+      run: yarn init-test-db
+           
     - name: Test 
       run: yarn test
 
