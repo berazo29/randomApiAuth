@@ -1,6 +1,7 @@
 # UUID Key Generator Web Application
-[![example workflow](https://github.com/berazo29/randomApiAuth/actions/workflows/node.js.yml/badge.svg?branch=development)
-![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+[![dev CI](https://github.com/berazo29/randomApiAuth/actions/workflows/dev-test.yml/badge.svg?branch=development)](https://github.com/berazo29/randomApiAuth/actions/workflows/dev-test.yml)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Interface for Authentication and Authorization using Session and JWT.
 
