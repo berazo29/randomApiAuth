@@ -25,7 +25,7 @@ jobs:
       mysql-service:
         image: mysql:8
         ports:
-          - 3306:3306
+          - ${{ env.DB_PORT }}:3306
         env:
           DB_USER: ${{ env.DB_USER }}
           DB_PASSWORD: ${{ env.DB_PASSWORD }}
@@ -64,11 +64,8 @@ jobs:
     - name: Initialize test database
       run: yarn init-test-db
            
-    - name: Test 
-      run: yarn test
-
-    - name: Coverange 
-      run: yarn coverage
+    - name: Test & Coverage
+      run: yarn st && yarn test
 
     - name: Clean yarn
       run: npm uninstall -g yarn
