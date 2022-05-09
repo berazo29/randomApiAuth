@@ -29,7 +29,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "st": "standard",
-    "test": "mocha",
+    "test": "yarn st && mocha",
     "coverage": "nyc yarn test",
     "init-test-db": "node ./models/devtools/dbschema-cli.js init populate"
   },
