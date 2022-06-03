@@ -7,6 +7,8 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.3.6",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "3.3.0",
     "mocha": "^9.2.2",
     "nodemon": "^2.0.15",
     "nyc": "^15.1.0",
@@ -37,5 +39,10 @@
     "env": [
       "mocha"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
