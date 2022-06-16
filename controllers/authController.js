@@ -1,6 +1,7 @@
 const { db } = require('../models/db')
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
+const { loginInterface } = require('../models/authModel')
 const salt = bcrypt.genSaltSync(Number(process.env.BCRYPT_SALT))
 
 const redirectHome = (req, res, next) => {
@@ -39,20 +40,15 @@ const login = (req, res) => {
     res.render('pages/login', { title: 'login', errors: errors, email: email })
     return
   }
-  const sql = 'SELECT * FROM users WHERE email = ?'
-  db.query(sql, email, (err, results) => {
-    if (err) throw err
-    if (results.length === 0) {
-      res.render('pages/register', { title: 'register', errors: errors, email: email })
-      return
-    }
-    if (bcrypt.compareSync(password, results[0].password)) {
+  loginInterface(email, password, (error, user) => {
+    if (error) throw error
+    if (user.length !== 0) {
       req.session.userId = email
       res.redirect('/')
-      return
+    } else {
+      errors.push('Password is not correct.')
+      res.render('pages/login', { title: 'login', errors: errors, email: email })
     }
-    errors.push('Password is not correct.')
-    res.render('pages/login', { title: 'login', errors: errors, email: email })
   })
 }
 
