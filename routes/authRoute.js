@@ -10,6 +10,10 @@ router.get('/login', redirectHome, (req, res) => {
   res.render('pages/login', { title: 'login', errors: [] })
 })
 
+router.get('/forgotPassword', redirectHome, (req, res) => {
+  res.render('pages/forgotPassword', { title: 'forgot password', errors: [] })
+})
+
 router.post('/register', redirectHome, register)
 
 router.post('/logout', logout, (req, res) => {
