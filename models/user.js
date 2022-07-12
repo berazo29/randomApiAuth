@@ -15,12 +15,22 @@ const getUserByEmail = (email, callback) => {
     if (error) return callback(error)
     if (results.length !== 0) {
       return callback(null, results[0])
-    } else {
-      return callback(null, [])
     }
+    return callback(null, '')
+  })
+}
+
+const changeUserPassword = (email, newPassword) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'UPDATE users SET password = ? WHERE email = ?'
+    db.query(sql, [newPassword, email], (error, result) => {
+      if (error) return reject(error)
+      return resolve(result)
+    })
   })
 }
 
 module.exports = {
-  getUser
+  getUser,
+  changeUserPassword
 }
