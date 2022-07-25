@@ -51,13 +51,10 @@ const sendResetPasswordInterface = (email, callback) => {
     .catch(error => callback(error))
 }
 
-const hash = rounds => password => {
-  if (!rounds || typeof rounds !== 'number') throw new Error('rounds must be an integer')
-  if (!password || typeof password !== 'string') throw new Error('password must be a non-empty string')
-  const salt = bcrypt.genSaltSync(rounds)
-  return bcrypt.hashSync(password, salt)
+const sendResetEmail = (user) => {
+  const link = createOneTimeLink(user, JWT_SECRET)
+  console.log(link)
+  return true
 }
 
-const hashPassword = hash(parseInt(process.env.BCRYPT_SALT))
-
-module.exports = { loginInterface, changePasswordInterface }
+module.exports = { loginInterface, changePasswordInterface, sendResetPasswordInterface, verifyTokenInterface }
