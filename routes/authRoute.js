@@ -11,7 +11,7 @@ router.get('/login', redirectHome, (req, res) => {
 })
 
 router.get('/forgotPassword', redirectHome, (req, res) => {
-  res.render('pages/forgotPassword', { title: 'forgot password', errors: [] })
+  res.render('pages/auth/forgotPassword', { title: 'forgot password', errors: [] })
 })
 
 router.get('/forgotPassword/:email/:token', redirectHome, verityToken)

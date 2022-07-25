@@ -106,7 +106,7 @@ const sendResetPassword = (req, res) => {
   const errors = []
   if (!email || !validator.isEmail(email)) {
     errors.push('Invalid email')
-    return res.render('pages/forgotPassword', { title: 'forgot password', errors: errors })
+    return res.render('pages/auth/forgotPassword', { title: 'forgot password', errors: errors })
   }
   sendResetPasswordInterface(email, (error, result) => {
     if (error) {
