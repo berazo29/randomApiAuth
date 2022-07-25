@@ -1,52 +1,49 @@
 <%- include('./templates/header', {title: title}) %>
 <%- include('./templates/navbar') %>
 
-<h2>Active Keys</h2>
-<form action="keyGenerator/generateKey" method="post">
-    <button type="submit" class="btn btn-primary">Generate Key</button>
-</form>
-<table class="table">
-    <thead class="thead-dark">
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Key</th>
-        <th scope="col">Expiration</th>
-        <th scope="col">Issue</th>
-        <th scope="col">Time</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% keys.forEach((key,index)=>{%>
-        <tr>
-            <th scope="row"><%= index+1 %></th>
-            <td><%= key.key_u4 %></td>
-            <td><%= key.exp_time %></td>
-            <td><%= key.created_time %></td>
-            <td><%= key.exp_date %></td>
-        </tr>
-    <%})%>
-    </tbody>
-</table>
 
-<h2>Expired Keys</h2>
-<table class="table">
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Key</th>
-        <th scope="col">Expiration</th>
-        <th scope="col">Issue</th>
-        <th scope="col">Time</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    </tbody>
-</table>
+<div class="container center mt-5 mb-5">
+
+    <p class="card-text"> Use this button to generate a new API key.</p>
+    <form action="keyGenerator/generateKey" method="post">
+        <button type="submit" class="btn btn-primary btn-sm">Generate Key</button>
+    </form>
+
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="card-body">
+                <h5 class="card-title">My Keys</h5>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Key</th>
+                        <th scope="col">Expiration</th>
+                        <th scope="col">Issue</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% if (keys.length === 0) { %>
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">You do not have any key yet.</td>
+                        </tr>
+                    <% } %>
+                    <% keys.forEach((key,index)=>{%>
+                        <tr>
+                            <th scope="row"><%= index+1 %></th>
+                            <td><%= key.key_u4 %></td>
+                            <td><%= key.exp_time %></td>
+                            <td><%= key.created_time %></td>
+                        </tr>
+                    <%})%>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 <%- include('./templates/footer') %>
