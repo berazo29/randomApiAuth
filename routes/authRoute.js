@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { redirectHome, logout, login, register } = require('../controllers/authController')
+const { redirectHome, logout, login, register, sendResetPassword, verityToken, resetNewPassword } = require('../controllers/authController')
 
 router.get('/register', redirectHome, (req, res) => {
   res.render('pages/register', { title: 'register', errors: [] })
@@ -14,6 +14,10 @@ router.get('/forgotPassword', redirectHome, (req, res) => {
   res.render('pages/forgotPassword', { title: 'forgot password', errors: [] })
 })
 
+router.get('/forgotPassword/:email/:token', redirectHome, verityToken)
+
+router.post('/forgotPassword/:email/:token', redirectHome, resetNewPassword)
+
 router.post('/register', redirectHome, register)
 
 router.post('/logout', logout, (req, res) => {
@@ -21,5 +25,7 @@ router.post('/logout', logout, (req, res) => {
 })
 
 router.post('/login', redirectHome, login)
+
+router.post('/forgotPassword', sendResetPassword)
 
 module.exports = router
