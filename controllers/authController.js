@@ -1,7 +1,7 @@
 const { db } = require('../models/db')
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
-const { loginInterface } = require('../models/authModel')
+const { loginInterface, sendResetPasswordInterface, changePasswordInterface, verifyTokenInterface } = require('../models/authModel')
 const salt = bcrypt.genSaltSync(Number(process.env.BCRYPT_SALT))
 
 const redirectHome = (req, res, next) => {
@@ -101,4 +101,80 @@ const register = (req, res) => {
   })
 }
 
-module.exports = { redirectLogin, redirectHome, logout, login, register }
+const sendResetPassword = (req, res) => {
+  const { email } = req.body
+  const errors = []
+  if (!email || !validator.isEmail(email)) {
+    errors.push('Invalid email')
+    return res.render('pages/forgotPassword', { title: 'forgot password', errors: errors })
+  }
+  sendResetPasswordInterface(email, (error, result) => {
+    if (error) {
+      console.log(error)
+    }
+    console.log(`is email sent to '${email}' = ${result}`)
+  })
+  return res.render('pages/auth/forgotPasswordFeedback', { title: 'forgot password feedback' })
+}
+
+const verityToken = (req, res, next) => {
+  const { email, token } = req.params
+  verifyTokenInterface(email, token, (error, isValid) => {
+    if (error) {
+      console.log(error)
+    }
+    if (isValid) {
+      res.render('pages/auth/resetPasswordForm', { title: 'reset password', email: email, errors: [] })
+    } else {
+      res.send('No valid token to change password')
+    }
+  })
+}
+
+const resetNewPassword = (req, res, next) => {
+  const { email, token } = req.params
+  const { password, password2 } = req.body
+  const errors = []
+  if (!email) {
+    errors.push('Email cannot be empty.')
+  }
+  if (!password) {
+    errors.push('Password cannot be empty.')
+  }
+  if (password !== password2) {
+    errors.push('Passwords do not match.')
+  }
+  if (!validator.isEmail(email)) {
+    errors.push('Email is not valid')
+  }
+  if (!validator.isStrongPassword(password)) {
+    errors.push('Password does not meet security checks.')
+  }
+  if (errors.length !== 0) {
+    res.render('pages/auth/resetPasswordForm', { title: 'reset password', errors: errors, email: email })
+    return
+  }
+  verifyTokenInterface(email, token, (error, isValid) => {
+    if (error) {
+      console.log(error)
+    }
+    if (isValid) {
+      changePasswordInterface(email, password, (error, result) => {
+        if (error) {
+          console.log(error)
+          res.send('There was an error when changing the password')
+          return
+        }
+        if (result !== '') {
+          return res.send('Password changed')
+        }
+        const msm = `Could not change the password for user = '${email}'`
+        res.send(msm)
+      })
+    } else {
+      res.send('No valid token to change password')
+    }
+  })
+}
+
+module.exports = { redirectLogin, redirectHome, logout, login, register, sendResetPassword, verityToken, resetNewPassword }
