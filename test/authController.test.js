@@ -1,4 +1,3 @@
-// const { assert, expect } = require('chai')
 const request = require('supertest')
 const server = require('../index')
 const { db, clientRedis } = require('../models/db')
