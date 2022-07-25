@@ -639,3 +639,5 @@ FodyWeavers.xsd
 # Mac files
 .DS_Store
 
+# Local
+.test.js
