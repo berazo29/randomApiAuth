@@ -27,6 +27,12 @@
                             </button>
                         </div>
                     </form>
+                    <div class="form-group">
+                        <p class="text-muted small"><a href="/auth/forgotPassword" style="text-decoration:none">Forgot Password?</a></p>
+                    </div>
+                    <div class="form-group ">
+                        <p class="text-muted small">Need an account? <a href="/auth/register" style="text-decoration:none">Register</a></p>
+                    </div>
                     <% errors.forEach((error) => { %>
                         <p class="alert alert-danger"> <%= error %> </p>
                     <% }) %>

@@ -64,11 +64,8 @@ jobs:
     - name: Initialize test database
       run: yarn init-test-db
            
-    - name: Test 
-      run: yarn test
-
-    - name: Coverange 
-      run: yarn coverage
+    - name: Test & Coverage
+      run: yarn st && yarn test
 
     - name: Clean yarn
       run: npm uninstall -g yarn

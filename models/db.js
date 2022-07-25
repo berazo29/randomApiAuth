@@ -13,11 +13,14 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) throw err
-  console.log('MySQL connected')
+  console.log('[mysql]: ok')
 })
 
 clientRedis.on('connect', () => {
-  console.log('Redis connected')
+  console.log('[redis]: ok')
+})
+clientRedis.on('error', (error) => {
+  console.log('[redis]: ', error)
 })
 
 module.exports = { db, clientRedis }

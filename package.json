@@ -5,8 +5,15 @@
   "repository": "https://github.com/berazo29/randomApiAuth.git",
   "author": "Bryan Erazo <bryanerazo29@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=16.15.0",
+    "yarn": ">=1.22.0",
+    "npm": "please-use-yarn"
+  },
   "devDependencies": {
     "chai": "^4.3.6",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "3.3.0",
     "mocha": "^9.2.2",
     "nodemon": "^2.0.15",
     "nyc": "^15.1.0",
@@ -19,6 +26,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "ioredis": "^4.28.2",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.14",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
@@ -37,5 +45,10 @@
     "env": [
       "mocha"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
