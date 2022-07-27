@@ -1,0 +1,52 @@
+<%- include('../templates/header', {title: title}) %>
+<%- include('../templates/navbar') %>
+
+<div class="container center mt-5 mb-5">
+
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="card-body">
+                <h5 class="card-title">Logs</h5>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Request</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Ip</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Country</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% if (logs.length === 0) { %>
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">You do not have any log yet.</td>
+                        </tr>
+                    <% } %>
+                    <% logs.forEach((log, index)=>{ %>
+                        <tr class="text-center">
+                            <th scope="row"><%= index+1 %></th>
+                            <td><%= log.date %></td>
+                            <td><%= log.time %></td>
+                            <td><%= log.request %></td>
+                            <td><%= log.status %></td>
+                            <td><%= log.ip %></td>
+                            <td><%= log.location %></td>
+                            <td><%= log.country %></td>
+                        </tr>
+                    <%})%>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<%- include('../templates/footer') %>
