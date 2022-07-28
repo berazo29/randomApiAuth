@@ -8,6 +8,7 @@ const authRoute = require('./routes/authRoute')
 const mainRoute = require('./routes/mainRoute')
 const keyGeneratorRoute = require('./routes/keyGeneratorRoute')
 const accountRoute = require('./routes/accountRoute')
+const logsRoute = require('./routes/logsRoute')
 
 app.use(session({
   name: 'session',
@@ -48,6 +49,7 @@ app.use('/', mainRoute)
 app.use('/auth', authRoute)
 app.use('/keyGenerator', keyGeneratorRoute)
 app.use('/account', accountRoute)
+app.use('/logs', logsRoute)
 
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)
