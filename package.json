@@ -42,7 +42,7 @@
     "st": "standard",
     "test": "yarn st && mocha",
     "coverage": "nyc yarn test",
-    "init-test-db": "node ./models/devtools/dbschema-cli.js init populate"
+    "init-test-db": "node ./devtools/dbschema-cli.js init populate"
   },
   "standard": {
     "env": [
