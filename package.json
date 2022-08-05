@@ -40,7 +40,9 @@
     "postinstall": "husky install",
     "dev": "nodemon index.js",
     "st": "standard",
-    "test": "yarn st && mocha",
+    "test": "yarn st && yarn test:unit && yarn test:integration",
+    "test:unit": "mocha test/unit",
+    "test:integration": "mocha test/integration",
     "coverage": "nyc yarn test",
     "init-test-db": "node ./devtools/dbschema-cli.js init populate"
   },

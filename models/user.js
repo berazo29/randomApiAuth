@@ -30,7 +30,32 @@ const changeUserPassword = (email, newPassword) => {
   })
 }
 
+const createUser = (email, password) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO users (email, password) VALUES (?, ?)'
+    db.query(sql, [email, password], (error, result) => {
+      if (error) return reject(error)
+      return resolve(true)
+    })
+  })
+}
+
+const userExists = (email) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT id FROM users WHERE email = ?'
+    db.query(sql, email, (error, results) => {
+      if (error) return reject(error)
+      if (results.length !== 0) {
+        return resolve(true)
+      }
+      resolve(false)
+    })
+  })
+}
+
 module.exports = {
   getUser,
+  createUser,
+  userExists,
   changeUserPassword
 }

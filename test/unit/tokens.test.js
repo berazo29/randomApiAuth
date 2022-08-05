@@ -1,4 +1,4 @@
-const { isTokenValid } = require('../models/auth/tokens')
+const { isTokenValid } = require('../../models/auth/tokens')
 const chai = require('chai')
 const assert = chai.assert
 const jwt = require('jsonwebtoken')

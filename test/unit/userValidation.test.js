@@ -1,4 +1,4 @@
-const { isValidUser } = require('../models/auth/userValidation')
+const { isValidUser } = require('../../models/auth/userValidation')
 const chai = require('chai')
 const assert = chai.assert
 

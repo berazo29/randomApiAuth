@@ -1,6 +1,7 @@
-const { getUser, changeUserPassword } = require('./user')
+const { getUser, changeUserPassword, createUser, userExists } = require('./user')
 const { isTokenValid, createOneTimeLink } = require('./auth/tokens')
 const { hashPassword, authenticatePassword } = require('./auth/hasher')
+const validator = require('validator')
 
 const JWT_SECRET = process.env.JWT_SECRET
 
@@ -57,4 +58,23 @@ const sendResetEmail = (user) => {
   return true
 }
 
-module.exports = { loginInterface, changePasswordInterface, sendResetPasswordInterface, verifyTokenInterface }
+const registerUserInterface = (email, password, callback) => {
+  if (!validator.isEmail(email)) {
+    return callback(new Error('invalid string email format'))
+  }
+  if (!validator.isStrongPassword(password, { minLength: 10 })) {
+    return callback(new Error('password is not Strong'))
+  }
+  userExists(email)
+    .then(isUser => {
+      if (!isUser) {
+        const hash = hashPassword(password)
+        return createUser(email, hash)
+      }
+      return false
+    })
+    .then(userCreated => { return callback(null, userCreated) })
+    .catch(error => callback(error))
+}
+
+module.exports = { loginInterface, changePasswordInterface, sendResetPasswordInterface, verifyTokenInterface, registerUserInterface }
