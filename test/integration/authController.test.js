@@ -1,6 +1,6 @@
 const request = require('supertest')
-const server = require('../index')
-const { db, clientRedis } = require('../models/db')
+const server = require('../../index')
+const { db, clientRedis } = require('../../models/db')
 
 describe('Authentication Integrated Test', () => {
   after(function () {
