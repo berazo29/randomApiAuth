@@ -1,6 +1,7 @@
 const validator = require('validator')
-const { loginInterface, registerUserInterface } = require('../models/authModel')
-const { sendResetPasswordInterface, changePasswordInterface, verifyTokenInterface } = require('../models/authModel')
+const { loginInterface, registerUserInterface } = require('../models/auth/authModel')
+const { sendResetPasswordInterface, changePasswordInterface, verifyTokenInterface } = require('../models/auth/authModel')
+const _ = require('lodash')
 
 const redirectHome = (req, res, next) => {
   if (req.session.userId) {
@@ -38,10 +39,11 @@ const login = (req, res) => {
     res.render('pages/login', { title: 'login', errors: errors, email: email })
     return
   }
-  loginInterface(email, password, (error, user) => {
-    if (error) throw error
-    if (user.length !== 0) {
-      req.session.userId = email
+  loginInterface(email, password, (error, results) => {
+    if (error) return res.send('something went wrong while login')
+    if (results.length > 0) {
+      const user = _.first(results)
+      req.session.userId = user.email
       res.redirect('/')
     } else {
       errors.push('Password is not correct.')
@@ -80,9 +82,15 @@ const register = (req, res) => {
     return
   }
   registerUserInterface(email, password, (error, results) => {
-    if (error) throw error
-    req.session.userId = email
-    res.redirect('/')
+    if (error) return res.send('something went wrong while registering')
+    if (results.length > 0) {
+      const user = _.first(results)
+      req.session.userId = user.email
+      res.redirect('/')
+    } else {
+      const error = 'Email is already registered, please go to login page'
+      res.render('pages/register', { title: 'register', errors: [error], email: email })
+    }
   })
 }
 
