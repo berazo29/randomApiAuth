@@ -47,6 +47,7 @@
     "test:integration": "mocha test/integration --exit",
     "coverage": "nyc --check-coverage yarn test",
     "init-test-db": "node ./devtools/dbschema-cli.js init populate",
+    "docker": "docker-compose up -d"
   },
   "standard": {
     "env": [
