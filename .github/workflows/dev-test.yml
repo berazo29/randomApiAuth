@@ -65,7 +65,7 @@ jobs:
       run: yarn init-test-db
            
     - name: Test & Coverage
-      run: yarn st && yarn test
+      run: yarn test
 
     - name: Clean yarn
       run: npm uninstall -g yarn
