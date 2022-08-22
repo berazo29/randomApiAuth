@@ -1,13 +1,13 @@
 const request = require('supertest')
-const server = require('../../index')
-const { db, clientRedis } = require('../../models/db')
+const helper = require('../../devtools/testUtils/appInstanceResolver')
 
 describe('Authentication Integrated Test', () => {
-  after(function () {
-    // Closes database services and server after testing is completed
-    server.close()
-    db.end()
-    clientRedis.disconnect()
+  let server
+  before((done) => {
+    helper.getApp().then(app => {
+      server = app
+      done()
+    })
   })
   describe('GET /auth/login', () => {
     it('should respond a login form', (done) => {

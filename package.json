@@ -22,6 +22,7 @@
     "supertest": "^6.2.2"
   },
   "dependencies": {
+    "@ngneat/falso": "^6.1.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
@@ -30,6 +31,7 @@
     "ioredis": "^4.28.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.14",
+    "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "standard": "^16.0.4",
@@ -42,9 +44,10 @@
     "st": "standard",
     "test": "yarn st && yarn test:unit && yarn test:integration",
     "test:unit": "mocha test/unit",
-    "test:integration": "mocha test/integration",
-    "coverage": "nyc yarn test",
-    "init-test-db": "node ./devtools/dbschema-cli.js init populate"
+    "test:integration": "mocha test/integration --exit",
+    "coverage": "nyc --check-coverage yarn test",
+    "init-test-db": "node ./devtools/dbschema-cli.js init populate",
+    "docker": "docker-compose up -d"
   },
   "standard": {
     "env": [

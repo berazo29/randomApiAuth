@@ -10,12 +10,12 @@ const isTokenValid = (token, secret) => {
 }
 
 const createOneTimeLink = (user, secret) => {
-  const uniqueSecret = secret + user.password
+  const uniqueSecret = secret + user.passwordHash
   const payload = {
     email: user.email
   }
   const token = jwt.sign(payload, uniqueSecret, {
-    expiresIn: '1m'
+    expiresIn: '3m'
   })
   const link = `http://localhost:3000/auth/forgotPassword/${user.email}/${token}`
   return link
