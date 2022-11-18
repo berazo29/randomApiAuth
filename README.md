@@ -43,7 +43,7 @@ node ./Models/devtools/dbschema-cli.js init
 
 
 <!-- LICENSE -->
-## License
+## License Reviewed
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
